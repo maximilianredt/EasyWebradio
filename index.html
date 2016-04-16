@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>EasyWebradio</title>
+	<link href="assets/css/libs/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/libs/jquery-ui.min.css" rel="stylesheet">
+	<link href="assets/css/libs/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/app.css" rel="stylesheet">
+	<link href="assets/css/player.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+	<div class="player">
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="player-control-play" data-status="stopped">
+					<i class="fa"></i>
+				</div>
+			</div>
+			<div class="col-xs-8">
+				<div class="player-control-volume">
+					<div class="mute" data-status="false" data-prev="100"></div>
+					<span class="tooltip"></span>
+					<div class="slider"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>window.$ = window.jQuery = require('./assets/js/libs/jquery-1.12.3.min.js');</script>
+<script type="text/javascript" src="assets/js/libs/jquery-ui.min.js"></script>
+<script type="text/javascript" src="assets/js/libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
+</body>
+</html>
