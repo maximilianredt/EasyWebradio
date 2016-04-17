@@ -58,3 +58,5 @@ Player.prototype.oncanplaythrough = function(stream) {
 Player.prototype.onpause = function() {
 	this.status = 'stopped';
 };
+
+module.exports = Player;
