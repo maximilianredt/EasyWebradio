@@ -17,11 +17,14 @@ var player = null;
 
 var channels = new AppChannels(function() {
 	player = new AppPlayer(channels.getAll()[0].url);
+	player.setVolume(5); // turn down volume to not die while debugging
 
+	var channelsAll = channels.getAll();
 	// initially write the stream status
 	playerCtrl.attr('data-status', player.status);
-	var channelName = channels[1].name;
+	var channelName = channelsAll[1].name;
 	// channelVal.text(channelName).css('color', 'white'); // changes text to radio channel name and colour to white
+
 	/**
 	 * value of Player.status should always be on
 	 * '.player-control-volume .slider[data-status]'
@@ -30,6 +33,13 @@ var channels = new AppChannels(function() {
 	player.watch('status', function (prop, oldval, newval) {
 		playerCtrl.attr('data-status', newval);
 	});
+
+
+	for (i = 0; i < channelsAll.length; i++) {
+		var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
+		channelSelect.append(channelOption);
+		console.log(i);
+	};
 });
 
 // hide tooltip for now until we need it ;)
@@ -39,7 +49,7 @@ tooltip.hide();
  * init volume slider
  */
 slider.slider({
-	'value': 100,
+	'value': 5, // volume slider at 5
 
 	start: function (event, ui) {
 		// show tooltip when sliding starts
@@ -82,11 +92,6 @@ playerCtrl.on('click', function () {
 });
 
 console.log(channels);
-for (i = 0; i < channels.length; i++) {
-	var channelOption = $('<option></option>').text(channels[i].name).attr('value', i);
-	channelSelect.append(channelOption);
-	console.log(i);
-};
 
 var switchChannels = function(index) {
 	if (playerCtrl.attr('data-status') === 'playing' || playerCtrl.attr('data-status') === 'loading') {
