@@ -13,8 +13,8 @@ var AppChannels = require('./assets/js/app/Channels.js');
 var AppPlayer = require('./assets/js/app/Player.js');
 var player = null;
 
-var channels = AppChannels(function() {
-	player = new AppPlayer(channels[0].url);
+var channels = new AppChannels(function() {
+	player = new AppPlayer(channels.getAll()[0].url);
 
 	// initially write the stream status
 	playerCtrl.attr('data-status', player.status);
