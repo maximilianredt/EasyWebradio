@@ -15,6 +15,10 @@ var Channels = function(onChannelsLoaded) {
 				{
 					name: 'SWR 3',
 					url: 'http://swr-mp3-m-swr3.akacast.akamaistream.net/7/720/137136/v1/gnl.akacast.akamaistream.net/swr-mp3-m-swr3'
+				},
+				{
+					name: 'BBC Radio 5 Live',
+					url: 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p'
 				}
 			];
 			onChannelsLoaded();

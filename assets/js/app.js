@@ -2,6 +2,8 @@
 var playerCtrl = $('.player-control-play'),
 	slider = $('.player-control-volume .slider'),
 	tooltip = $('.player-control-volume .tooltip'),
+	channelVal = $('.player-channel-select'),
+	channelSelect = $('.channel-dropdown'),
 	db = new PouchDB('ewr');
 
 // set PouchDB to debug mode for now
@@ -18,7 +20,8 @@ var channels = new AppChannels(function() {
 
 	// initially write the stream status
 	playerCtrl.attr('data-status', player.status);
-
+	var channelName = channels[1].name;
+	// channelVal.text(channelName).css('color', 'white'); // changes text to radio channel name and colour to white
 	/**
 	 * value of Player.status should always be on
 	 * '.player-control-volume .slider[data-status]'
@@ -77,3 +80,22 @@ playerCtrl.on('click', function () {
 			break;
 	}
 });
+
+console.log(channels);
+for (i = 0; i < channels.length; i++) {
+	var channelOption = $('<option></option>').text(channels[i].name).attr('value', i);
+	channelSelect.append(channelOption);
+	console.log(i);
+};
+
+var switchChannels = function(index) {
+	if (playerCtrl.attr('data-status') === 'playing' || playerCtrl.attr('data-status') === 'loading') {
+		player.stop();
+	}
+	player = new AppPlayer(channels[index].url);
+	playerCtrl.attr('data-status', player.status);
+	player.watch('status', function (prop, oldval, newval) {
+		playerCtrl.attr('data-status', newval);
+	});
+	player.play();
+};
