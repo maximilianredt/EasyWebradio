@@ -17,7 +17,6 @@ var player = null;
 
 var channels = new AppChannels(function() {
 	player = new AppPlayer(channels.getAll()[0].url);
->>>>>>> e06eb2496081d88d26282697466dc21c3a3cf8c5
 
 	// initially write the stream status
 	playerCtrl.attr('data-status', player.status);
