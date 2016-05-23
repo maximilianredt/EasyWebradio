@@ -18,21 +18,60 @@ var Channels = function(onChannelsLoaded) {
 				}
 			];
 			onChannelsLoaded();
-			return db.put({
-				_id: 'channels',
-				channels: self.channels
-			});
+			return self.writeChannelsToDb();
 		}
 	});
 };
 
 /**
- * prepare playing of stream,
- * but for now only load the stream.
- * oncanplaythrough will start the stream then,
- * as soon as it is loaded.
+ * write channels to database
+ */
+Channels.prototype.writeChannelsToDb = function() {
+	return db.put({
+		_id: 'channels',
+		channels: self.channels
+	});
+};
+
+/**
+ * get all channels
+ *
+ * @return array
  */
 Channels.prototype.getAll = function() {
+	return this.channels;
+};
+
+/**
+ * get channel by index
+ *
+ * @return object
+ */
+Channels.prototype.getChannelByIndex = function(channelIndex) {
+	return this.channels[channelIndex];
+};
+
+/**
+ * add one channel
+ *
+ * @var int channelIndex
+ * @return array
+ */
+Channels.prototype.addChannel = function(name, url) {
+	this.channels.push({name: name, url: url});
+	this.writeChannelsToDb();
+	return this.channels;
+};
+
+/**
+ * delete one channel by index
+ *
+ * @var int channelIndex
+ * @return array
+ */
+Channels.prototype.deleteChannelByIndex = function(channelIndex) {
+	this.channels.splice(channelIndex, 1);
+	this.writeChannelsToDb();
 	return this.channels;
 };
 
