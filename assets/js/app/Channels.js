@@ -1,11 +1,16 @@
 var Channels = function(onChannelsLoaded) {
 	this.channels = {};
+	this._rev = null;
 	var self = this;
 
 	db.get('channels').then(function (doc) {
-		self.channels = doc.channels;
+		console.log("doc");
+		console.log(doc);
+		self.channels = doc.channels.channels;
+		self._rev = doc._rev;
 		onChannelsLoaded();
 	}).catch(function (err) {
+		//console.log(err);
 		if (err.status === 404) {
 			self.channels = [
 				{
@@ -31,10 +36,21 @@ var Channels = function(onChannelsLoaded) {
  * write channels to database
  */
 Channels.prototype.writeChannelsToDb = function() {
-	return db.put({
-		_id: 'channels',
+	var writeData = {
+		_id : "channels",
 		channels: self.channels
+	};
+	if (this._rev != null) {
+		writeData._rev = this._rev;
+	}
+	db.put(writeData).then(function(response) {
+		console.log('response');
+		console.log(response);
+		self._rev = response._rev;
+	}).catch(function (err) {
+		//console.log(err);
 	});
+	return true;
 };
 
 /**

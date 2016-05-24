@@ -38,7 +38,6 @@ var channels = new AppChannels(function() {
 	for (i = 0; i < channelsAll.length; i++) {
 		var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
 		channelSelect.append(channelOption);
-		console.log(i);
 	};
 });
 
