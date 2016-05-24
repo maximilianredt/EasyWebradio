@@ -33,7 +33,7 @@ var channels = new AppChannels(function() {
 	player.watch('status', function (prop, oldval, newval) {
 		playerCtrl.attr('data-status', newval);
 	});
-
+	channelsAll.addChannel('BBC Radio 5', 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p')
 
 	for (i = 0; i < channelsAll.length; i++) {
 		var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
