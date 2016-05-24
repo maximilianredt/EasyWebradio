@@ -33,12 +33,24 @@ var channels = new AppChannels(function() {
 	player.watch('status', function (prop, oldval, newval) {
 		playerCtrl.attr('data-status', newval);
 	});
-	channelsAll.addChannel('BBC Radio 5', 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p')
 
-	for (i = 0; i < channelsAll.length; i++) {
-		var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
-		channelSelect.append(channelOption);
-	};
+	 /**
+	 * this function is called by the submit button in the modal
+	 * when the button is pressed, the name and the URL are added
+	 * to the database of available channels
+	 */
+	 var modalAddChannel = function() {
+		 var channelName = $('#channelName').val(),
+		 		 channelUrl = $('#channelUrl').val();
+		 channels.addChannel(channelName, channelUrl);
+	 };
+
+	 for (i = 0; i < channelsAll.length; i++) {
+		 var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
+		 channelSelect.append(channelOption);
+	 };
+
+
 });
 
 // hide tooltip for now until we need it ;)
@@ -90,16 +102,21 @@ playerCtrl.on('click', function () {
 	}
 });
 
-console.log(channels);
-
 var switchChannels = function(index) {
-	if (playerCtrl.attr('data-status') === 'playing' || playerCtrl.attr('data-status') === 'loading') {
-		player.stop();
-	}
-	player = new AppPlayer(channels[index].url);
-	playerCtrl.attr('data-status', player.status);
-	player.watch('status', function (prop, oldval, newval) {
-		playerCtrl.attr('data-status', newval);
-	});
-	player.play();
+ 	player.stop();
+	this.status = 'loading';
+ 	player = new AppPlayer(channels.getAll()[index].url);
+ 	playerCtrl.attr('data-status', player.status);
+ 	player.watch('status', function (prop, oldval, newval) {
+ 		playerCtrl.attr('data-status', newval);
+ 	});
+
+	player.setVolume(slider.slider('value'));
+	player.status = 'loading';
+ 	player.play();
 };
+
+channelSelect.on('change', function() {
+	var thisValue = $(this).val();
+	switchChannels(thisValue);
+});
