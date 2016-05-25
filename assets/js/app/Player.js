@@ -59,4 +59,13 @@ Player.prototype.onpause = function() {
 	this.status = 'stopped';
 };
 
+/**
+ * change the url of a stream
+ */
+Player.prototype.changeStreamUrl = function(stream_url) {
+	this.stop();
+	this.stream_url = stream_url;
+	this.stream.src = this.stream_url;
+};
+
 module.exports = Player;

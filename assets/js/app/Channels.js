@@ -44,8 +44,6 @@ Channels.prototype.writeChannelsToDb = function() {
 		writeData._rev = this._rev;
 	}
 	db.put(writeData).then(function(response) {
-		console.log('response');
-		console.log(response);
 		self._rev = response._rev;
 	}).catch(function (err) {
 		//console.log(err);

@@ -104,15 +104,7 @@ playerCtrl.on('click', function () {
 
 var switchChannels = function(index) {
  	player.stop();
-	this.status = 'loading';
- 	player = new AppPlayer(channels.getAll()[index].url);
- 	playerCtrl.attr('data-status', player.status);
- 	player.watch('status', function (prop, oldval, newval) {
- 		playerCtrl.attr('data-status', newval);
- 	});
-
-	player.setVolume(slider.slider('value'));
-	player.status = 'loading';
+	player.changeStreamUrl(channels.getAll()[index].url);
  	player.play();
 };
 
