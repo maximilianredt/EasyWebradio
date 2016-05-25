@@ -40,16 +40,30 @@ var channels = new AppChannels(function() {
 	 * to the database of available channels
 	 */
 	 var modalAddChannel = function() {
-		 var channelName = $('#channelName').val(),
-		 		 channelUrl = $('#channelUrl').val();
-		 channels.addChannel(channelName, channelUrl);
+		 var channelName = $('#channelName'),
+		 		 channelUrl = $('#channelUrl');
+		 channels.addChannel(channelName.val(), channelUrl.val());
+		 channelName.val('');
+		 channelUrl.val('');
+		 $('#addChannelModal').modal('hide');
+		 renderChannelList();
 	 };
 
-	 for (i = 0; i < channelsAll.length; i++) {
-		 var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
-		 channelSelect.append(channelOption);
+	 var renderChannelList = function() {
+		 var currentChannel = channelSelect.val();
+		 channelSelect.html('');
+		 for (i = 0; i < channelsAll.length; i++) {
+			 var channelOption = $('<option></option>').text(channelsAll[i].name).attr('value', i);
+			 channelSelect.append(channelOption);
+		 };
+		 if (currentChannel != null) {
+			 channelSelect.val(currentChannel);
+		 };
 	 };
 
+	 renderChannelList();
+
+	 $('#submit-btn').on('click', modalAddChannel);
 
 });
 
