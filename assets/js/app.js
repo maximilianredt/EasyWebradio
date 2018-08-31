@@ -15,9 +15,11 @@ var AppChannels = require('./assets/js/app/Channels.js');
 var AppPlayer = require('./assets/js/app/Player.js');
 var player = null;
 
+var initialVolume = 50;
+
 var channels = new AppChannels(function() {
 	player = new AppPlayer(channels.getAll()[0].url);
-	player.setVolume(5); // turn down volume to not die while debugging
+	player.setVolume(initialVolume); // turn down volume to not die while debugging
 
 	var channelsAll = channels.getAll();
 	// initially write the stream status
@@ -74,7 +76,7 @@ tooltip.hide();
  * init volume slider
  */
 slider.slider({
-	'value': 5, // volume slider at 5
+	'value': initialVolume, // volume slider at initialVolume (= 50)
 
 	start: function (event, ui) {
 		// show tooltip when sliding starts
